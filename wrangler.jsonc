@@ -3,6 +3,8 @@
   "main": ".open-next/worker.js",
   "name": "coffee-atlas",
   "compatibility_date": "2026-04-01",
+  "workers_dev": true,
+  "preview_urls": true,
   "compatibility_flags": [
     "nodejs_compat",
     "global_fetch_strictly_public"
@@ -19,5 +21,8 @@
   ],
   "images": {
     "binding": "IMAGES"
-  }
+  },
+  "routes": [
+    { "pattern": "coffee.figtre.es", "custom_domain": true }
+  ]
 }
