@@ -31,6 +31,23 @@ export default async function RegionPage({
     .where(eq(schema.subRegions.regionSlug, regionSlug))
     .orderBy(asc(schema.subRegions.name));
 
+  const producersInRegion = await db
+    .selectDistinct({
+      slug: schema.producers.slug,
+      primaryName: schema.producers.primaryName,
+    })
+    .from(schema.producers)
+    .innerJoin(
+      schema.estates,
+      eq(schema.estates.primaryProducerSlug, schema.producers.slug),
+    )
+    .innerJoin(
+      schema.subRegions,
+      eq(schema.estates.subRegionSlug, schema.subRegions.slug),
+    )
+    .where(eq(schema.subRegions.regionSlug, regionSlug))
+    .orderBy(asc(schema.producers.primaryName));
+
   return (
     <main className="mx-auto max-w-3xl px-6 py-16">
       <nav className="text-xs uppercase tracking-wider text-zinc-500 dark:text-zinc-400">
@@ -78,6 +95,26 @@ export default async function RegionPage({
                   className="block py-3 hover:bg-zinc-50 dark:hover:bg-zinc-900/50"
                 >
                   <span className="font-medium">{s.name}</span>
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </section>
+      )}
+
+      {producersInRegion.length > 0 && (
+        <section className="mt-10">
+          <h2 className="text-xs uppercase tracking-wider text-zinc-500 dark:text-zinc-400">
+            Producers
+          </h2>
+          <ul className="mt-3 divide-y divide-zinc-200 dark:divide-zinc-800">
+            {producersInRegion.map((p) => (
+              <li key={p.slug}>
+                <Link
+                  href={`/producers/${p.slug}`}
+                  className="block py-3 hover:bg-zinc-50 dark:hover:bg-zinc-900/50"
+                >
+                  <span className="font-medium">{p.primaryName}</span>
                 </Link>
               </li>
             ))}
