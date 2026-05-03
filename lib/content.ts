@@ -6,7 +6,11 @@ import { z } from "zod";
 // ─── Frontmatter schemas ───────────────────────────────────────────────────
 // Coordinates are [lng, lat] tuples (matching PostGIS POINT(lng lat) order).
 
-const Coord = z.tuple([z.number(), z.number()]);
+const Coord = z
+  .tuple([z.number(), z.number()])
+  .refine(([lng, lat]) => lng >= -180 && lng <= 180 && lat >= -90 && lat <= 90, {
+    message: "coord out of range — expected [lng ∈ [-180,180], lat ∈ [-90,90]]",
+  });
 
 export const CountryFrontmatter = z.object({
   slug: z.string(),
@@ -93,7 +97,10 @@ async function readMdxDir<T>(
   try {
     entries = await fs.readdir(dir);
   } catch (err: unknown) {
-    if ((err as NodeJS.ErrnoException).code === "ENOENT") return [];
+    if ((err as NodeJS.ErrnoException).code === "ENOENT") {
+      console.warn(`! content/${subdir}/ does not exist; skipping`);
+      return [];
+    }
     throw err;
   }
 

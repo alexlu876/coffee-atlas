@@ -4,6 +4,8 @@ import { eq, asc } from "drizzle-orm";
 import { getDb, schema } from "@/lib/db";
 import { MdxBody } from "@/lib/mdx";
 
+export const revalidate = 3600;
+
 export default async function CountryPage({
   params,
 }: {
@@ -52,7 +54,7 @@ export default async function CountryPage({
                   className="block py-3 hover:bg-zinc-50 dark:hover:bg-zinc-900/50"
                 >
                   <span className="font-medium">{r.name}</span>
-                  {(r.altitudeMin || r.altitudeMax) && (
+                  {(r.altitudeMin != null || r.altitudeMax != null) && (
                     <span className="ml-3 text-sm text-zinc-500 dark:text-zinc-400">
                       {r.altitudeMin}–{r.altitudeMax} m
                     </span>

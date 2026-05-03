@@ -4,6 +4,8 @@ import { eq, asc } from "drizzle-orm";
 import { getDb, schema } from "@/lib/db";
 import { MdxBody } from "@/lib/mdx";
 
+export const revalidate = 3600;
+
 export default async function SubRegionPage({
   params,
 }: {

@@ -10,6 +10,7 @@ import {
   geometry,
   primaryKey,
   unique,
+  type AnyPgColumn,
 } from "drizzle-orm/pg-core";
 
 // Spec calls for `geography(Point, 4326)`. Using Drizzle's built-in
@@ -36,7 +37,7 @@ export const regions = pgTable(
   "regions",
   {
     slug: text("slug").primaryKey(),
-    countrySlug: text("country_slug").references(() => countries.slug),
+    countrySlug: text("country_slug").notNull().references(() => countries.slug),
     name: text("name").notNull(),
     centroid: geographyPoint("centroid"),
     // v0: WKT text. ALTER COLUMN to geometry(polygon,4326) when region shading on atlas ships.
@@ -54,7 +55,7 @@ export const subRegions = pgTable(
   "sub_regions",
   {
     slug: text("slug").primaryKey(),
-    regionSlug: text("region_slug").references(() => regions.slug),
+    regionSlug: text("region_slug").notNull().references(() => regions.slug),
     name: text("name").notNull(),
     centroid: geographyPoint("centroid"),
     descriptionMd: text("description_md"),
@@ -98,7 +99,7 @@ export const varieties = pgTable("varieties", {
   slug: text("slug").primaryKey(),
   name: text("name").notNull(),
   altNames: text("alt_names").array(),
-  parentVarietySlug: text("parent_variety_slug").references((): any => varieties.slug),
+  parentVarietySlug: text("parent_variety_slug").references((): AnyPgColumn => varieties.slug),
   originCountrySlug: text("origin_country_slug").references(() => countries.slug),
   originStoryMd: text("origin_story_md"),
   flavorProfileMd: text("flavor_profile_md"),
@@ -108,7 +109,7 @@ export const processes = pgTable("processes", {
   slug: text("slug").primaryKey(),
   name: text("name").notNull(),
   altNames: text("alt_names").array(),
-  parentProcessSlug: text("parent_process_slug").references((): any => processes.slug),
+  parentProcessSlug: text("parent_process_slug").references((): AnyPgColumn => processes.slug),
   descriptionMd: text("description_md"),
   pioneeredByProducerSlug: text("pioneered_by_producer_slug").references(() => producers.slug),
 });
@@ -142,7 +143,7 @@ export const importers = pgTable("importers", {
 
 export const cities = pgTable("cities", {
   slug: text("slug").primaryKey(),
-  countrySlug: text("country_slug").references(() => countries.slug),
+  countrySlug: text("country_slug").notNull().references(() => countries.slug),
   name: text("name").notNull(),
   centroid: geographyPoint("centroid"),
 });
@@ -186,8 +187,8 @@ export const cafes = pgTable("cafes", {
 export const producerImporters = pgTable(
   "producer_importers",
   {
-    producerSlug: text("producer_slug").notNull().references(() => producers.slug),
-    importerSlug: text("importer_slug").notNull().references(() => importers.slug),
+    producerSlug: text("producer_slug").notNull().references(() => producers.slug, { onDelete: "cascade" }),
+    importerSlug: text("importer_slug").notNull().references(() => importers.slug, { onDelete: "cascade" }),
     sinceYear: integer("since_year"),
     isPrimary: boolean("is_primary"),
   },
@@ -197,8 +198,8 @@ export const producerImporters = pgTable(
 export const roasterLots = pgTable(
   "roaster_lots",
   {
-    roasterSlug: text("roaster_slug").notNull().references(() => roasters.slug),
-    lotSlug: text("lot_slug").notNull().references(() => lots.slug),
+    roasterSlug: text("roaster_slug").notNull().references(() => roasters.slug, { onDelete: "cascade" }),
+    lotSlug: text("lot_slug").notNull().references(() => lots.slug, { onDelete: "cascade" }),
     firstSeenAt: timestamp("first_seen_at", { withTimezone: true }),
     lastSeenAt: timestamp("last_seen_at", { withTimezone: true }),
     status: text("status"), // 'active' | 'sold_out' | 'historical'
@@ -211,8 +212,8 @@ export const roasterLots = pgTable(
 export const cafeRoasters = pgTable(
   "cafe_roasters",
   {
-    cafeSlug: text("cafe_slug").notNull().references(() => cafes.slug),
-    roasterSlug: text("roaster_slug").notNull().references(() => roasters.slug),
+    cafeSlug: text("cafe_slug").notNull().references(() => cafes.slug, { onDelete: "cascade" }),
+    roasterSlug: text("roaster_slug").notNull().references(() => roasters.slug, { onDelete: "cascade" }),
     isPrimary: boolean("is_primary"),
     notesMd: text("notes_md"),
   },
@@ -222,8 +223,8 @@ export const cafeRoasters = pgTable(
 export const cafeLots = pgTable(
   "cafe_lots",
   {
-    cafeSlug: text("cafe_slug").notNull().references(() => cafes.slug),
-    lotSlug: text("lot_slug").notNull().references(() => lots.slug),
+    cafeSlug: text("cafe_slug").notNull().references(() => cafes.slug, { onDelete: "cascade" }),
+    lotSlug: text("lot_slug").notNull().references(() => lots.slug, { onDelete: "cascade" }),
     format: text("format"), // 'filter' | 'espresso' | 'both'
     status: text("status"),
     firstSeenAt: timestamp("first_seen_at", { withTimezone: true }),
@@ -248,9 +249,9 @@ export const competitions = pgTable("competitions", {
 // once the entry semantics are nailed down.
 export const competitionResults = pgTable("competition_results", {
   id: serial("id").primaryKey(),
-  competitionSlug: text("competition_slug").notNull().references(() => competitions.slug),
-  producerSlug: text("producer_slug").notNull().references(() => producers.slug),
-  lotSlug: text("lot_slug").references(() => lots.slug),
+  competitionSlug: text("competition_slug").notNull().references(() => competitions.slug, { onDelete: "cascade" }),
+  producerSlug: text("producer_slug").notNull().references(() => producers.slug, { onDelete: "cascade" }),
+  lotSlug: text("lot_slug").references(() => lots.slug, { onDelete: "set null" }),
   rank: integer("rank"),
   score: numeric("score", { precision: 4, scale: 2 }),
   lotNameAtCompetition: text("lot_name_at_competition"),

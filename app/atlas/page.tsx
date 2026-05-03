@@ -3,7 +3,7 @@ import { sql, isNotNull, eq } from "drizzle-orm";
 import { getDb, schema } from "@/lib/db";
 import AtlasMap, { type AtlasEstate } from "@/components/atlas-map";
 
-export const dynamic = "force-dynamic";
+export const revalidate = 3600;
 
 export default async function AtlasPage() {
   const db = await getDb();

@@ -9,6 +9,7 @@
     "lint": "eslint",
     "preview": "opennextjs-cloudflare build && opennextjs-cloudflare preview",
     "deploy": "opennextjs-cloudflare build && opennextjs-cloudflare deploy",
+    "ci:build": "npm run db:migrate && npm run content:sync && opennextjs-cloudflare build",
     "cf-typegen": "wrangler types --env-interface CloudflareEnv cloudflare-env.d.ts",
     "db:init": "tsx scripts/init-db.ts",
     "db:smoke": "tsx scripts/smoke-db.ts",

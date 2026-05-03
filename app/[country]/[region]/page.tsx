@@ -4,6 +4,8 @@ import { eq, asc } from "drizzle-orm";
 import { getDb, schema } from "@/lib/db";
 import { MdxBody } from "@/lib/mdx";
 
+export const revalidate = 3600;
+
 export default async function RegionPage({
   params,
 }: {
@@ -65,7 +67,7 @@ export default async function RegionPage({
       <h1 className="mt-2 text-4xl font-medium tracking-tight">{region.name}</h1>
 
       <dl className="mt-4 flex flex-wrap gap-x-6 gap-y-1 text-sm text-zinc-600 dark:text-zinc-400">
-        {(region.altitudeMin || region.altitudeMax) && (
+        {(region.altitudeMin != null || region.altitudeMax != null) && (
           <span>
             {region.altitudeMin}–{region.altitudeMax} m
           </span>
