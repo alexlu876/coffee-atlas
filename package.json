@@ -14,15 +14,19 @@
     "db:smoke": "tsx scripts/smoke-db.ts",
     "db:generate": "drizzle-kit generate",
     "db:migrate": "tsx scripts/migrate.ts",
-    "db:studio": "drizzle-kit studio"
+    "db:studio": "drizzle-kit studio",
+    "content:sync": "tsx scripts/sync-content.ts"
   },
   "dependencies": {
     "@neondatabase/serverless": "^1.1.0",
     "@opennextjs/cloudflare": "^1.19.5",
     "drizzle-orm": "^0.45.2",
+    "gray-matter": "^4.0.3",
     "next": "16.2.4",
+    "next-mdx-remote": "^6.0.0",
     "react": "19.2.4",
-    "react-dom": "19.2.4"
+    "react-dom": "19.2.4",
+    "zod": "^4.4.2"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
