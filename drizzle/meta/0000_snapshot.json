@@ -1,0 +1,1526 @@
+{
+  "id": "e2039ca1-9d97-4beb-9b54-b35234c8270b",
+  "prevId": "00000000-0000-0000-0000-000000000000",
+  "version": "7",
+  "dialect": "postgresql",
+  "tables": {
+    "public.cafe_lots": {
+      "name": "cafe_lots",
+      "schema": "",
+      "columns": {
+        "cafe_slug": {
+          "name": "cafe_slug",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "lot_slug": {
+          "name": "lot_slug",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "format": {
+          "name": "format",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "status": {
+          "name": "status",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "first_seen_at": {
+          "name": "first_seen_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "last_seen_at": {
+          "name": "last_seen_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "cafe_lots_cafe_slug_cafes_slug_fk": {
+          "name": "cafe_lots_cafe_slug_cafes_slug_fk",
+          "tableFrom": "cafe_lots",
+          "tableTo": "cafes",
+          "columnsFrom": [
+            "cafe_slug"
+          ],
+          "columnsTo": [
+            "slug"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        },
+        "cafe_lots_lot_slug_lots_slug_fk": {
+          "name": "cafe_lots_lot_slug_lots_slug_fk",
+          "tableFrom": "cafe_lots",
+          "tableTo": "lots",
+          "columnsFrom": [
+            "lot_slug"
+          ],
+          "columnsTo": [
+            "slug"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {
+        "cafe_lots_cafe_slug_lot_slug_pk": {
+          "name": "cafe_lots_cafe_slug_lot_slug_pk",
+          "columns": [
+            "cafe_slug",
+            "lot_slug"
+          ]
+        }
+      },
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.cafe_roasters": {
+      "name": "cafe_roasters",
+      "schema": "",
+      "columns": {
+        "cafe_slug": {
+          "name": "cafe_slug",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "roaster_slug": {
+          "name": "roaster_slug",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "is_primary": {
+          "name": "is_primary",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "notes_md": {
+          "name": "notes_md",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "cafe_roasters_cafe_slug_cafes_slug_fk": {
+          "name": "cafe_roasters_cafe_slug_cafes_slug_fk",
+          "tableFrom": "cafe_roasters",
+          "tableTo": "cafes",
+          "columnsFrom": [
+            "cafe_slug"
+          ],
+          "columnsTo": [
+            "slug"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        },
+        "cafe_roasters_roaster_slug_roasters_slug_fk": {
+          "name": "cafe_roasters_roaster_slug_roasters_slug_fk",
+          "tableFrom": "cafe_roasters",
+          "tableTo": "roasters",
+          "columnsFrom": [
+            "roaster_slug"
+          ],
+          "columnsTo": [
+            "slug"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {
+        "cafe_roasters_cafe_slug_roaster_slug_pk": {
+          "name": "cafe_roasters_cafe_slug_roaster_slug_pk",
+          "columns": [
+            "cafe_slug",
+            "roaster_slug"
+          ]
+        }
+      },
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.cafes": {
+      "name": "cafes",
+      "schema": "",
+      "columns": {
+        "slug": {
+          "name": "slug",
+          "type": "text",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "name": {
+          "name": "name",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "neighborhood_slug": {
+          "name": "neighborhood_slug",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "address": {
+          "name": "address",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "location": {
+          "name": "location",
+          "type": "geometry(point)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "hours_json": {
+          "name": "hours_json",
+          "type": "jsonb",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "description_md": {
+          "name": "description_md",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "ambiance_notes": {
+          "name": "ambiance_notes",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "photo_urls": {
+          "name": "photo_urls",
+          "type": "text[]",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "cafes_neighborhood_slug_neighborhoods_slug_fk": {
+          "name": "cafes_neighborhood_slug_neighborhoods_slug_fk",
+          "tableFrom": "cafes",
+          "tableTo": "neighborhoods",
+          "columnsFrom": [
+            "neighborhood_slug"
+          ],
+          "columnsTo": [
+            "slug"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.cities": {
+      "name": "cities",
+      "schema": "",
+      "columns": {
+        "slug": {
+          "name": "slug",
+          "type": "text",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "country_slug": {
+          "name": "country_slug",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "name": {
+          "name": "name",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "centroid": {
+          "name": "centroid",
+          "type": "geometry(point)",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "cities_country_slug_countries_slug_fk": {
+          "name": "cities_country_slug_countries_slug_fk",
+          "tableFrom": "cities",
+          "tableTo": "countries",
+          "columnsFrom": [
+            "country_slug"
+          ],
+          "columnsTo": [
+            "slug"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.competition_results": {
+      "name": "competition_results",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "competition_slug": {
+          "name": "competition_slug",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "producer_slug": {
+          "name": "producer_slug",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "lot_slug": {
+          "name": "lot_slug",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "rank": {
+          "name": "rank",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "score": {
+          "name": "score",
+          "type": "numeric(4, 2)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "lot_name_at_competition": {
+          "name": "lot_name_at_competition",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "competition_results_competition_slug_competitions_slug_fk": {
+          "name": "competition_results_competition_slug_competitions_slug_fk",
+          "tableFrom": "competition_results",
+          "tableTo": "competitions",
+          "columnsFrom": [
+            "competition_slug"
+          ],
+          "columnsTo": [
+            "slug"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        },
+        "competition_results_producer_slug_producers_slug_fk": {
+          "name": "competition_results_producer_slug_producers_slug_fk",
+          "tableFrom": "competition_results",
+          "tableTo": "producers",
+          "columnsFrom": [
+            "producer_slug"
+          ],
+          "columnsTo": [
+            "slug"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        },
+        "competition_results_lot_slug_lots_slug_fk": {
+          "name": "competition_results_lot_slug_lots_slug_fk",
+          "tableFrom": "competition_results",
+          "tableTo": "lots",
+          "columnsFrom": [
+            "lot_slug"
+          ],
+          "columnsTo": [
+            "slug"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.competitions": {
+      "name": "competitions",
+      "schema": "",
+      "columns": {
+        "slug": {
+          "name": "slug",
+          "type": "text",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "name": {
+          "name": "name",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "country_slug": {
+          "name": "country_slug",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "year": {
+          "name": "year",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "type": {
+          "name": "type",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "competitions_country_slug_countries_slug_fk": {
+          "name": "competitions_country_slug_countries_slug_fk",
+          "tableFrom": "competitions",
+          "tableTo": "countries",
+          "columnsFrom": [
+            "country_slug"
+          ],
+          "columnsTo": [
+            "slug"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.countries": {
+      "name": "countries",
+      "schema": "",
+      "columns": {
+        "slug": {
+          "name": "slug",
+          "type": "text",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "name": {
+          "name": "name",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "iso_code": {
+          "name": "iso_code",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "description_md": {
+          "name": "description_md",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "coffee_history_md": {
+          "name": "coffee_history_md",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "total_production_bags": {
+          "name": "total_production_bags",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "hero_image_url": {
+          "name": "hero_image_url",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "centroid": {
+          "name": "centroid",
+          "type": "geometry(point)",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "countries_iso_code_unique": {
+          "name": "countries_iso_code_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "iso_code"
+          ]
+        }
+      },
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.estates": {
+      "name": "estates",
+      "schema": "",
+      "columns": {
+        "slug": {
+          "name": "slug",
+          "type": "text",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "name": {
+          "name": "name",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "type": {
+          "name": "type",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "primary_producer_slug": {
+          "name": "primary_producer_slug",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "sub_region_slug": {
+          "name": "sub_region_slug",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "location": {
+          "name": "location",
+          "type": "geometry(point)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "altitude_min": {
+          "name": "altitude_min",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "altitude_max": {
+          "name": "altitude_max",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "area_hectares": {
+          "name": "area_hectares",
+          "type": "numeric",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "year_founded": {
+          "name": "year_founded",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "description_md": {
+          "name": "description_md",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "notable_lots_md": {
+          "name": "notable_lots_md",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "hero_image_url": {
+          "name": "hero_image_url",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "estates_primary_producer_slug_producers_slug_fk": {
+          "name": "estates_primary_producer_slug_producers_slug_fk",
+          "tableFrom": "estates",
+          "tableTo": "producers",
+          "columnsFrom": [
+            "primary_producer_slug"
+          ],
+          "columnsTo": [
+            "slug"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        },
+        "estates_sub_region_slug_sub_regions_slug_fk": {
+          "name": "estates_sub_region_slug_sub_regions_slug_fk",
+          "tableFrom": "estates",
+          "tableTo": "sub_regions",
+          "columnsFrom": [
+            "sub_region_slug"
+          ],
+          "columnsTo": [
+            "slug"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.importers": {
+      "name": "importers",
+      "schema": "",
+      "columns": {
+        "slug": {
+          "name": "slug",
+          "type": "text",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "name": {
+          "name": "name",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "hq_country_slug": {
+          "name": "hq_country_slug",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "website": {
+          "name": "website",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "description_md": {
+          "name": "description_md",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "importers_hq_country_slug_countries_slug_fk": {
+          "name": "importers_hq_country_slug_countries_slug_fk",
+          "tableFrom": "importers",
+          "tableTo": "countries",
+          "columnsFrom": [
+            "hq_country_slug"
+          ],
+          "columnsTo": [
+            "slug"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.lots": {
+      "name": "lots",
+      "schema": "",
+      "columns": {
+        "slug": {
+          "name": "slug",
+          "type": "text",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "estate_slug": {
+          "name": "estate_slug",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "producer_slug": {
+          "name": "producer_slug",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "variety_slug": {
+          "name": "variety_slug",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "process_slug": {
+          "name": "process_slug",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "harvest_year": {
+          "name": "harvest_year",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "name": {
+          "name": "name",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "sca_score": {
+          "name": "sca_score",
+          "type": "numeric(4, 2)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "tasting_notes": {
+          "name": "tasting_notes",
+          "type": "text[]",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "altitude_picked": {
+          "name": "altitude_picked",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "lot_size_kg": {
+          "name": "lot_size_kg",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "description_md": {
+          "name": "description_md",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "lots_estate_slug_estates_slug_fk": {
+          "name": "lots_estate_slug_estates_slug_fk",
+          "tableFrom": "lots",
+          "tableTo": "estates",
+          "columnsFrom": [
+            "estate_slug"
+          ],
+          "columnsTo": [
+            "slug"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        },
+        "lots_producer_slug_producers_slug_fk": {
+          "name": "lots_producer_slug_producers_slug_fk",
+          "tableFrom": "lots",
+          "tableTo": "producers",
+          "columnsFrom": [
+            "producer_slug"
+          ],
+          "columnsTo": [
+            "slug"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        },
+        "lots_variety_slug_varieties_slug_fk": {
+          "name": "lots_variety_slug_varieties_slug_fk",
+          "tableFrom": "lots",
+          "tableTo": "varieties",
+          "columnsFrom": [
+            "variety_slug"
+          ],
+          "columnsTo": [
+            "slug"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        },
+        "lots_process_slug_processes_slug_fk": {
+          "name": "lots_process_slug_processes_slug_fk",
+          "tableFrom": "lots",
+          "tableTo": "processes",
+          "columnsFrom": [
+            "process_slug"
+          ],
+          "columnsTo": [
+            "slug"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.neighborhoods": {
+      "name": "neighborhoods",
+      "schema": "",
+      "columns": {
+        "slug": {
+          "name": "slug",
+          "type": "text",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "city_slug": {
+          "name": "city_slug",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "name": {
+          "name": "name",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "centroid": {
+          "name": "centroid",
+          "type": "geometry(point)",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "neighborhoods_city_slug_cities_slug_fk": {
+          "name": "neighborhoods_city_slug_cities_slug_fk",
+          "tableFrom": "neighborhoods",
+          "tableTo": "cities",
+          "columnsFrom": [
+            "city_slug"
+          ],
+          "columnsTo": [
+            "slug"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "neighborhoods_city_slug_slug_unique": {
+          "name": "neighborhoods_city_slug_slug_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "city_slug",
+            "slug"
+          ]
+        }
+      },
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.processes": {
+      "name": "processes",
+      "schema": "",
+      "columns": {
+        "slug": {
+          "name": "slug",
+          "type": "text",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "name": {
+          "name": "name",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "alt_names": {
+          "name": "alt_names",
+          "type": "text[]",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "parent_process_slug": {
+          "name": "parent_process_slug",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "description_md": {
+          "name": "description_md",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "pioneered_by_producer_slug": {
+          "name": "pioneered_by_producer_slug",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "processes_parent_process_slug_processes_slug_fk": {
+          "name": "processes_parent_process_slug_processes_slug_fk",
+          "tableFrom": "processes",
+          "tableTo": "processes",
+          "columnsFrom": [
+            "parent_process_slug"
+          ],
+          "columnsTo": [
+            "slug"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        },
+        "processes_pioneered_by_producer_slug_producers_slug_fk": {
+          "name": "processes_pioneered_by_producer_slug_producers_slug_fk",
+          "tableFrom": "processes",
+          "tableTo": "producers",
+          "columnsFrom": [
+            "pioneered_by_producer_slug"
+          ],
+          "columnsTo": [
+            "slug"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.producer_importers": {
+      "name": "producer_importers",
+      "schema": "",
+      "columns": {
+        "producer_slug": {
+          "name": "producer_slug",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "importer_slug": {
+          "name": "importer_slug",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "since_year": {
+          "name": "since_year",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "is_primary": {
+          "name": "is_primary",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "producer_importers_producer_slug_producers_slug_fk": {
+          "name": "producer_importers_producer_slug_producers_slug_fk",
+          "tableFrom": "producer_importers",
+          "tableTo": "producers",
+          "columnsFrom": [
+            "producer_slug"
+          ],
+          "columnsTo": [
+            "slug"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        },
+        "producer_importers_importer_slug_importers_slug_fk": {
+          "name": "producer_importers_importer_slug_importers_slug_fk",
+          "tableFrom": "producer_importers",
+          "tableTo": "importers",
+          "columnsFrom": [
+            "importer_slug"
+          ],
+          "columnsTo": [
+            "slug"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {
+        "producer_importers_producer_slug_importer_slug_pk": {
+          "name": "producer_importers_producer_slug_importer_slug_pk",
+          "columns": [
+            "producer_slug",
+            "importer_slug"
+          ]
+        }
+      },
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.producers": {
+      "name": "producers",
+      "schema": "",
+      "columns": {
+        "slug": {
+          "name": "slug",
+          "type": "text",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "primary_name": {
+          "name": "primary_name",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "alt_names": {
+          "name": "alt_names",
+          "type": "text[]",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "bio_md": {
+          "name": "bio_md",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "generation": {
+          "name": "generation",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "year_started": {
+          "name": "year_started",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "hero_image_url": {
+          "name": "hero_image_url",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "is_collective": {
+          "name": "is_collective",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": false,
+          "default": false
+        },
+        "family_member_slugs": {
+          "name": "family_member_slugs",
+          "type": "text[]",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.regions": {
+      "name": "regions",
+      "schema": "",
+      "columns": {
+        "slug": {
+          "name": "slug",
+          "type": "text",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "country_slug": {
+          "name": "country_slug",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "name": {
+          "name": "name",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "centroid": {
+          "name": "centroid",
+          "type": "geometry(point)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "geo_polygon": {
+          "name": "geo_polygon",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "altitude_min": {
+          "name": "altitude_min",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "altitude_max": {
+          "name": "altitude_max",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "typical_processes": {
+          "name": "typical_processes",
+          "type": "text[]",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "typical_varieties": {
+          "name": "typical_varieties",
+          "type": "text[]",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "description_md": {
+          "name": "description_md",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "regions_country_slug_countries_slug_fk": {
+          "name": "regions_country_slug_countries_slug_fk",
+          "tableFrom": "regions",
+          "tableTo": "countries",
+          "columnsFrom": [
+            "country_slug"
+          ],
+          "columnsTo": [
+            "slug"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "regions_country_slug_slug_unique": {
+          "name": "regions_country_slug_slug_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "country_slug",
+            "slug"
+          ]
+        }
+      },
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.roaster_lots": {
+      "name": "roaster_lots",
+      "schema": "",
+      "columns": {
+        "roaster_slug": {
+          "name": "roaster_slug",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "lot_slug": {
+          "name": "lot_slug",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "first_seen_at": {
+          "name": "first_seen_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "last_seen_at": {
+          "name": "last_seen_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "status": {
+          "name": "status",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "product_url": {
+          "name": "product_url",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "retail_price_usd": {
+          "name": "retail_price_usd",
+          "type": "numeric",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "roaster_lots_roaster_slug_roasters_slug_fk": {
+          "name": "roaster_lots_roaster_slug_roasters_slug_fk",
+          "tableFrom": "roaster_lots",
+          "tableTo": "roasters",
+          "columnsFrom": [
+            "roaster_slug"
+          ],
+          "columnsTo": [
+            "slug"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        },
+        "roaster_lots_lot_slug_lots_slug_fk": {
+          "name": "roaster_lots_lot_slug_lots_slug_fk",
+          "tableFrom": "roaster_lots",
+          "tableTo": "lots",
+          "columnsFrom": [
+            "lot_slug"
+          ],
+          "columnsTo": [
+            "slug"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {
+        "roaster_lots_roaster_slug_lot_slug_pk": {
+          "name": "roaster_lots_roaster_slug_lot_slug_pk",
+          "columns": [
+            "roaster_slug",
+            "lot_slug"
+          ]
+        }
+      },
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.roasters": {
+      "name": "roasters",
+      "schema": "",
+      "columns": {
+        "slug": {
+          "name": "slug",
+          "type": "text",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "name": {
+          "name": "name",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "hq_city_slug": {
+          "name": "hq_city_slug",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "website": {
+          "name": "website",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "philosophy_md": {
+          "name": "philosophy_md",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "founded_year": {
+          "name": "founded_year",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "description_md": {
+          "name": "description_md",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "hero_image_url": {
+          "name": "hero_image_url",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "roasters_hq_city_slug_cities_slug_fk": {
+          "name": "roasters_hq_city_slug_cities_slug_fk",
+          "tableFrom": "roasters",
+          "tableTo": "cities",
+          "columnsFrom": [
+            "hq_city_slug"
+          ],
+          "columnsTo": [
+            "slug"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.sub_regions": {
+      "name": "sub_regions",
+      "schema": "",
+      "columns": {
+        "slug": {
+          "name": "slug",
+          "type": "text",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "region_slug": {
+          "name": "region_slug",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "name": {
+          "name": "name",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "centroid": {
+          "name": "centroid",
+          "type": "geometry(point)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "description_md": {
+          "name": "description_md",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "sub_regions_region_slug_regions_slug_fk": {
+          "name": "sub_regions_region_slug_regions_slug_fk",
+          "tableFrom": "sub_regions",
+          "tableTo": "regions",
+          "columnsFrom": [
+            "region_slug"
+          ],
+          "columnsTo": [
+            "slug"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "sub_regions_region_slug_slug_unique": {
+          "name": "sub_regions_region_slug_slug_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "region_slug",
+            "slug"
+          ]
+        }
+      },
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.varieties": {
+      "name": "varieties",
+      "schema": "",
+      "columns": {
+        "slug": {
+          "name": "slug",
+          "type": "text",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "name": {
+          "name": "name",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "alt_names": {
+          "name": "alt_names",
+          "type": "text[]",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "parent_variety_slug": {
+          "name": "parent_variety_slug",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "origin_country_slug": {
+          "name": "origin_country_slug",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "origin_story_md": {
+          "name": "origin_story_md",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "flavor_profile_md": {
+          "name": "flavor_profile_md",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "varieties_parent_variety_slug_varieties_slug_fk": {
+          "name": "varieties_parent_variety_slug_varieties_slug_fk",
+          "tableFrom": "varieties",
+          "tableTo": "varieties",
+          "columnsFrom": [
+            "parent_variety_slug"
+          ],
+          "columnsTo": [
+            "slug"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        },
+        "varieties_origin_country_slug_countries_slug_fk": {
+          "name": "varieties_origin_country_slug_countries_slug_fk",
+          "tableFrom": "varieties",
+          "tableTo": "countries",
+          "columnsFrom": [
+            "origin_country_slug"
+          ],
+          "columnsTo": [
+            "slug"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    }
+  },
+  "enums": {},
+  "schemas": {},
+  "sequences": {},
+  "roles": {},
+  "policies": {},
+  "views": {},
+  "_meta": {
+    "columns": {},
+    "schemas": {},
+    "tables": {}
+  }
+}

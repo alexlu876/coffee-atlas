@@ -21,6 +21,13 @@ async function main() {
     const [{ v }] = await sql`SELECT PostGIS_Full_Version() AS v`;
     console.log("postgis:", v);
   }
+
+  const tables = await sql`
+    SELECT table_name FROM information_schema.tables
+    WHERE table_schema = 'public' AND table_name NOT LIKE '\\_\\_%' ESCAPE '\\'
+    ORDER BY table_name`;
+  console.log(`tables: ${tables.length}`);
+  for (const t of tables) console.log(" ", t.table_name);
 }
 
 main().catch((err) => {

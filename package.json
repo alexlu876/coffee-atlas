@@ -11,7 +11,10 @@
     "deploy": "opennextjs-cloudflare build && opennextjs-cloudflare deploy",
     "cf-typegen": "wrangler types --env-interface CloudflareEnv cloudflare-env.d.ts",
     "db:init": "tsx scripts/init-db.ts",
-    "db:smoke": "tsx scripts/smoke-db.ts"
+    "db:smoke": "tsx scripts/smoke-db.ts",
+    "db:generate": "drizzle-kit generate",
+    "db:migrate": "tsx scripts/migrate.ts",
+    "db:studio": "drizzle-kit studio"
   },
   "dependencies": {
     "@neondatabase/serverless": "^1.1.0",

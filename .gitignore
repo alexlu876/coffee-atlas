@@ -44,3 +44,6 @@ next-env.d.ts
 .open-next/
 .wrangler/
 .dev.vars
+
+# drizzle — keep migrations checked in, ignore drizzle-kit's local cache only
+/drizzle/.cache/
