@@ -18,6 +18,15 @@ export default async function Home() {
         A specialty coffee atlas. Producers, roasters, cafes, and the connections between them.
       </p>
 
+      <p className="mt-6">
+        <Link
+          href="/atlas"
+          className="inline-flex items-center text-sm font-medium underline decoration-zinc-300 underline-offset-4 hover:decoration-zinc-900 dark:decoration-zinc-700 dark:hover:decoration-zinc-100"
+        >
+          Open the atlas →
+        </Link>
+      </p>
+
       {countries.length > 0 && (
         <section className="mt-12">
           <h2 className="text-xs uppercase tracking-wider text-zinc-500 dark:text-zinc-400">
