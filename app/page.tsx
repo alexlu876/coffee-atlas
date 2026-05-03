@@ -6,10 +6,10 @@ export const dynamic = "force-dynamic";
 
 export default async function Home() {
   const db = await getDb();
-  const countries = await db
-    .select()
-    .from(schema.countries)
-    .orderBy(asc(schema.countries.name));
+  const [countries, producers] = await Promise.all([
+    db.select().from(schema.countries).orderBy(asc(schema.countries.name)),
+    db.select().from(schema.producers).orderBy(asc(schema.producers.primaryName)),
+  ]);
 
   return (
     <main className="mx-auto max-w-3xl px-6 py-24">
@@ -31,6 +31,26 @@ export default async function Home() {
                   className="block py-3 hover:bg-zinc-50 dark:hover:bg-zinc-900/50"
                 >
                   <span className="font-medium">{c.name}</span>
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </section>
+      )}
+
+      {producers.length > 0 && (
+        <section className="mt-10">
+          <h2 className="text-xs uppercase tracking-wider text-zinc-500 dark:text-zinc-400">
+            Producers
+          </h2>
+          <ul className="mt-3 divide-y divide-zinc-200 dark:divide-zinc-800">
+            {producers.map((p) => (
+              <li key={p.slug}>
+                <Link
+                  href={`/producers/${p.slug}`}
+                  className="block py-3 hover:bg-zinc-50 dark:hover:bg-zinc-900/50"
+                >
+                  <span className="font-medium">{p.primaryName}</span>
                 </Link>
               </li>
             ))}
